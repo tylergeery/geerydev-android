@@ -1,5 +1,10 @@
 package com.geerydev.tyler.geerydevandroid.base
 
+import com.geerydev.tyler.geerydevandroid.injection.ContextModule
+import com.geerydev.tyler.geerydevandroid.injection.NetworkModule
+import com.geerydev.tyler.geerydevandroid.injection.component.PresenterInjector
+import com.geerydev.tyler.geerydevandroid.injection.component.DaggerPresenterInjector
+
 /**
  * Base presenter any presenter of the application must extend. It provides initial injections and
  * required methods.
@@ -8,6 +13,12 @@ package com.geerydev.tyler.geerydevandroid.base
  * @constructor Injects the required dependencies
  */
 abstract class BasePresenter<out V : BaseView>(protected val view: V) {
+    private val injector: PresenterInjector = DaggerPresenterInjector
+            .builder()
+            .baseView(view)
+            .contextModule(ContextModule)
+            .networkModule(NetworkModule)
+            .build()
 
     init {
         inject()
@@ -27,6 +38,8 @@ abstract class BasePresenter<out V : BaseView>(protected val view: V) {
      * Injects the required dependencies
      */
     private fun inject() {
-        //TODO: Implement this method
+        when (this) {
+            is PostPresenter -> injector.inject(this)
+        }
     }
 }
