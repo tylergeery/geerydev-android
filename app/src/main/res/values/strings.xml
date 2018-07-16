@@ -3,4 +3,9 @@
     <string name="title_posts">Posts</string>
     <string name="title_projects">Projects</string>
     <string name="title_about">About</string>
+
+    <!-- Post Strings -->
+    <string name="post_title">Blog Post</string>
+    <string name="post_date">Jan</string>
+
 </resources>

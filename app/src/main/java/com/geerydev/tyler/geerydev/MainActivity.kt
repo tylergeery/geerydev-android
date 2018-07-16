@@ -1,34 +1,81 @@
 package com.geerydev.tyler.geerydev
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import com.geerydev.tyler.geerydev.ui.post.PostAdapter
+import com.geerydev.tyler.geerydev.model.Post
+import com.geerydev.tyler.geerydev.network.GeeryDevPostService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import android.widget.Toast
 
-class MainActivity : AppCompatActivity() {
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_posts -> {
-                message.setText(R.string.title_posts)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_projects -> {
-                message.setText(R.string.title_projects)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_about -> {
-                message.setText(R.string.title_about)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
+
+class MainActivity : BaseActivity() {
+
+    private var page: Int = 1
+    private var per_page: Int = 10
+    private var sort: String = "created"
+
+    private var disposable: Disposable? = null
+
+    private val GeeryDevPostServe by lazy {
+        GeeryDevPostService.create()
     }
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: PostAdapter
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        viewManager = LinearLayoutManager(this)
+        viewAdapter = PostAdapter()
+
+        recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+            // use a linear layout manager
+            layoutManager = viewManager
+
+            // specify an viewAdapter (see also next example)
+            adapter = viewAdapter
+
+        }
+
+        getPosts()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getPosts()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposable?.dispose()
+    }
+
+    private fun getPosts() {
+        disposable =
+                GeeryDevPostServe.fetchPosts(sort, "response", page, per_page)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                { result -> showResult(result) },
+                                { error -> showError(error.message) }
+                        )
+    }
+
+    private fun showResult(result: List<Post>) {
+        println("Result: " + result.count())
+
+        viewAdapter.setPostViews(result)
+    }
+
+    private fun showError(message: String?) {
+        println("Error: " + message)
+        Toast.makeText(this, "Error: " + message, Toast.LENGTH_SHORT).show()
     }
 }

@@ -13,9 +13,9 @@ interface GeeryDevPostService {
     @GET("blogs")
     fun fetchPosts(@Query("sort") sort: String,
                       @Query("exists") exists: String,
-                      @Query("page") list: Int,
+                      @Query("page") page: Int,
                       @Query("per_page") per_page: Int):
-            Observable<Post>
+            Observable<List<Post>>
 
     companion object {
         fun create(): GeeryDevPostService {
@@ -23,7 +23,7 @@ interface GeeryDevPostService {
             val retrofit = Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("https://en.wikipedia.org/w/")
+                    .baseUrl("https://www.geerydev.com/api/")
                     .build()
 
             return retrofit.create(GeeryDevPostService::class.java)
