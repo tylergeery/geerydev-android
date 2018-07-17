@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.geerydev.tyler.geerydev.R
 import com.geerydev.tyler.geerydev.model.Post
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PostAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected var blogPosts: List<Post> = ArrayList()
@@ -46,7 +48,8 @@ class PostAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val titleView = holder.itemView.findViewById(R.id.post_title) as TextView
 
         // TODO: make human-readable date
-        dateView.text = post.created.toString()
+        val format = SimpleDateFormat("MMM\nyyyy")
+        dateView.text = format.format(post.created)
         titleView.text = post.question
     }
 }

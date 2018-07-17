@@ -5,7 +5,7 @@
     <string name="title_about">About</string>
 
     <!-- Post Strings -->
-    <string name="post_title">Blog Post</string>
-    <string name="post_date">Jan</string>
+    <string name="post_title">Tyler\'s Blog Post</string>
+    <string name="post_date">Jan\n2018</string>
 
 </resources>
