@@ -1,29 +1,25 @@
-package com.geerydev.tyler.geerydev
+package com.geerydev.tyler.geerydev.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.geerydev.tyler.geerydev.ui.post.PostAdapter
 import com.geerydev.tyler.geerydev.model.Post
-import com.geerydev.tyler.geerydev.network.GeeryDevPostService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import android.widget.Toast
+import com.geerydev.tyler.geerydev.R
 
 
-
-class MainActivity : BaseActivity() {
+class PostActivity : BaseActivity() {
 
     private var page: Int = 1
     private var per_page: Int = 10
     private var sort: String = "created"
 
     private var disposable: Disposable? = null
-
-    private val GeeryDevPostServe by lazy {
-        GeeryDevPostService.create()
-    }
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PostAdapter
@@ -33,7 +29,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = PostAdapter()
+        viewAdapter = PostAdapter(this)
 
         recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
             // use a linear layout manager
@@ -55,6 +51,12 @@ class MainActivity : BaseActivity() {
     override fun onPause() {
         super.onPause()
         disposable?.dispose()
+    }
+
+    fun viewPost(postId: String) {
+        var intent = Intent(this, PostReaderActivity::class.java)
+        intent.putExtra("POST_ID", postId)
+        startActivity(intent)
     }
 
     private fun getPosts() {

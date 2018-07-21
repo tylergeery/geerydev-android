@@ -1,27 +1,37 @@
-package com.geerydev.tyler.geerydev
+package com.geerydev.tyler.geerydev.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import com.geerydev.tyler.geerydev.R
+import com.geerydev.tyler.geerydev.network.GeeryDevService
 import kotlinx.android.synthetic.main.activity_main.*
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    protected val GeeryDevPostServe by lazy {
+        GeeryDevService.create()
+    }
+
     protected val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_posts -> {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, PostActivity::class.java)
 
                 startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_projects -> {
-                message.setText(R.string.title_projects)
+                val intent = Intent(this, ProjectActivity::class.java)
+
+                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_about -> {
-                message.setText(R.string.title_about)
+                val intent = Intent(this, AboutActivity::class.java)
+
+                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
         }

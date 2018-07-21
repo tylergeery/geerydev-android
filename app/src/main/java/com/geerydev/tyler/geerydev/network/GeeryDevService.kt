@@ -2,13 +2,15 @@ package com.geerydev.tyler.geerydev.network
 
 import com.geerydev.tyler.geerydev.model.Post
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface GeeryDevPostService {
+interface GeeryDevService {
 
     @GET("blogs")
     fun fetchPosts(@Query("sort") sort: String,
@@ -17,8 +19,12 @@ interface GeeryDevPostService {
                       @Query("per_page") per_page: Int):
             Observable<List<Post>>
 
+    @GET("blog/(id)")
+    fun fetchPost(@Path("id") id: String):
+            Single<Post>
+
     companion object {
-        fun create(): GeeryDevPostService {
+        fun create(): GeeryDevService {
 
             val retrofit = Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -26,7 +32,7 @@ interface GeeryDevPostService {
                     .baseUrl("https://www.geerydev.com/api/")
                     .build()
 
-            return retrofit.create(GeeryDevPostService::class.java)
+            return retrofit.create(GeeryDevService::class.java)
         }
     }
 }
