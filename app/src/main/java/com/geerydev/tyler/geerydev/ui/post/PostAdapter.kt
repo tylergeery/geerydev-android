@@ -22,7 +22,9 @@ class PostAdapter(val postActivity: PostActivity) : RecyclerView.Adapter<Recycle
 
         override fun onClick(v: View?) {
             println("ViewHolder Clicked: " + adapterPosition)
-            val intent = PostReaderActivity.newIntent(postActivity, this@PostAdapter.blogPosts[adapterPosition].id)
+            println(this@PostAdapter.blogPosts[adapterPosition])
+            println("Get blog posts")
+            val intent = PostReaderActivity.newIntent(postActivity, this@PostAdapter.blogPosts[adapterPosition]._id)
             postActivity.startActivity(intent)
         }
     }
@@ -45,7 +47,7 @@ class PostAdapter(val postActivity: PostActivity) : RecyclerView.Adapter<Recycle
         // create a new view
         // set the view's size, margins, paddings and layout parameters
         val cardView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.layout, parent, false)
+                .inflate(R.layout.post_summary, parent, false)
 
         return PostViewHolder(cardView, postActivity)
     }

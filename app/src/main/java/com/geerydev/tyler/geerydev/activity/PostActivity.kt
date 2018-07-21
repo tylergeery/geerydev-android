@@ -75,9 +75,4 @@ class PostActivity : BaseActivity() {
 
         viewAdapter.setPostViews(result)
     }
-
-    private fun showError(message: String?) {
-        println("Error: " + message)
-        Toast.makeText(this, "Error: " + message, Toast.LENGTH_SHORT).show()
-    }
 }

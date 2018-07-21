@@ -19,7 +19,7 @@ interface GeeryDevService {
                       @Query("per_page") per_page: Int):
             Observable<List<Post>>
 
-    @GET("blog/(id)")
+    @GET("blogs/{id}")
     fun fetchPost(@Path("id") id: String):
             Single<Post>
 

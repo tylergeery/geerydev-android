@@ -7,19 +7,19 @@ class ProjectActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        getPost()
+        getProjects()
     }
 
     override fun onResume() {
         super.onResume()
-        getPost()
+        getProjects()
     }
 
     override fun onPause() {
         super.onPause()
     }
 
-    fun getPost() {
+    fun getProjects() {
 
     }
 }
