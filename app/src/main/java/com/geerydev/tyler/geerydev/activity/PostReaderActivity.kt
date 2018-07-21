@@ -3,7 +3,8 @@ package com.geerydev.tyler.geerydev.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.util.Base64
+import android.webkit.WebView
 import com.geerydev.tyler.geerydev.R
 import com.geerydev.tyler.geerydev.model.Post
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +21,8 @@ class PostReaderActivity: BaseActivity() {
 
         id = intent.getStringExtra(INTENT_POST_ID)
 
-        setContentView(R.layout.post_summary)
+        println("Creating PostReaderActivity: " + id)
+        setContentView(R.layout.post_content)
 
         getPost()
     }
@@ -42,17 +44,21 @@ class PostReaderActivity: BaseActivity() {
         fun newIntent(context: Context, postId: String): Intent {
             val intent = Intent(context, PostReaderActivity::class.java)
             intent.putExtra(INTENT_POST_ID, postId)
+            println("PostReaderActivity starting: " + postId)
 
             return intent
         }
     }
 
     fun displayPost(post: Post) {
-        actionBar.setTitle(post.question)
+        println("PostReaderActivity Found post: " + post.question)
+        actionBar?.setTitle(post.question)
+        supportActionBar?.setTitle(post.question)
 
-        val textView = findViewById(R.id.post_reader_content) as TextView
+        val webView = findViewById(R.id.post_reader_content) as WebView
+        val encoded = Base64.encodeToString(post.response.toByteArray(), Base64.NO_PADDING)
 
-        textView.setText(post.response)
+        webView.loadData(encoded,"text/html", "base64")
     }
 
     fun getPost() {
