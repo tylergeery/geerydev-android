@@ -1,6 +1,7 @@
 package com.geerydev.tyler.geerydev.network
 
 import com.geerydev.tyler.geerydev.model.Post
+import com.geerydev.tyler.geerydev.model.Project
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.Retrofit
@@ -22,6 +23,9 @@ interface GeeryDevService {
     @GET("blogs/{id}")
     fun fetchPost(@Path("id") id: String):
             Single<Post>
+
+    @GET("projects")
+    fun fetchProjects(): Observable<List<Project>>
 
     companion object {
         fun create(): GeeryDevService {
