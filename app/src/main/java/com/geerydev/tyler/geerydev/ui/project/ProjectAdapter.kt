@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.geerydev.tyler.geerydev.R
 import com.geerydev.tyler.geerydev.activity.ProjectActivity
 import com.geerydev.tyler.geerydev.model.Project
@@ -53,13 +54,11 @@ class ProjectAdapter(val projectActivity: ProjectActivity) : RecyclerView.Adapte
         // - replace the contents of the view with that element
 
         val project: Project = projects[position]
-//        val dateView = holder.itemView.findViewById(R.id.post_date) as TextView
-//        val titleView = holder.itemView.findViewById(R.id.post_title) as TextView
+        val titleView = holder.itemView.findViewById(R.id.project_title) as TextView
+        val detailsView = holder.itemView.findViewById(R.id.project_details) as TextView
 
-        // TODO: make human-readable date
-//        val format = SimpleDateFormat("MMM\nyyyy")
-//        dateView.text = format.format(post.created)
-//        titleView.text = post.question
+        titleView.text = project.title
+        detailsView.text = project.detail
 
         (holder as ProjectViewHolder).setOnClickListener()
     }

@@ -6,6 +6,7 @@ data class Project (
     val _id: String,
     val type: String,
     val image: String,
+    val title: String,
     val link: String,
     val detail: String,
     val created: Date

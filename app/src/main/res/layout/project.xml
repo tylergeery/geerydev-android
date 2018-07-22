@@ -8,27 +8,31 @@
     <android.support.v7.widget.CardView
         android:id="@+id/post_headbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="100dp">
 
         <TextView
             android:id="@+id/project_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="100dp"
+            android:textSize="20dp"
+            android:gravity="center_vertical|center_horizontal"
             android:text="Project Title" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:padding="10dp"
             app:srcCompat="@mipmap/geerydev_launcher" />
 
     </android.support.v7.widget.CardView>
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:id="@+id/project_details"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/post_headbar"
+        android:layout_marginTop="100dp"
         android:text="Project details and other information" />
 </android.support.v7.widget.CardView>
