@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView
 import com.geerydev.tyler.geerydev.R
 import com.geerydev.tyler.geerydev.model.Project
 import com.geerydev.tyler.geerydev.ui.project.ProjectAdapter
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 class ProjectActivity: BaseActivity() {
     private var disposable: Disposable? = null

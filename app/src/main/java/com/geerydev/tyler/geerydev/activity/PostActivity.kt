@@ -9,7 +9,6 @@ import com.geerydev.tyler.geerydev.model.Post
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import android.widget.Toast
 import com.geerydev.tyler.geerydev.R
 
 

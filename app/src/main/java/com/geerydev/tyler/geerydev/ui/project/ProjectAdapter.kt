@@ -4,10 +4,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.geerydev.tyler.geerydev.R
 import com.geerydev.tyler.geerydev.activity.ProjectActivity
 import com.geerydev.tyler.geerydev.model.Project
+import com.squareup.picasso.Picasso
 import java.util.*
 
 class ProjectAdapter(val projectActivity: ProjectActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -56,6 +58,9 @@ class ProjectAdapter(val projectActivity: ProjectActivity) : RecyclerView.Adapte
         val project: Project = projects[position]
         val titleView = holder.itemView.findViewById(R.id.project_title) as TextView
         val detailsView = holder.itemView.findViewById(R.id.project_details) as TextView
+        val imageView = holder.itemView.findViewById(R.id.project_image) as ImageView
+
+        Picasso.get().load("https://geerydev.com" + project.image).into(imageView);
 
         titleView.text = project.title
         detailsView.text = project.detail
