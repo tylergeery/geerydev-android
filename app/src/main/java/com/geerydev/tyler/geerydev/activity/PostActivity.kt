@@ -52,12 +52,6 @@ class PostActivity : BaseActivity() {
         disposable?.dispose()
     }
 
-    fun viewPost(postId: String) {
-        var intent = Intent(this, PostReaderActivity::class.java)
-        intent.putExtra("POST_ID", postId)
-        startActivity(intent)
-    }
-
     private fun getPosts() {
         disposable =
                 GeeryDevPostServe.fetchPosts(sort, "response", page, per_page)

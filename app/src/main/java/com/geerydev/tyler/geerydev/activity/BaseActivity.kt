@@ -46,6 +46,10 @@ abstract class BaseActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
+    protected fun setChecked(index: Int) {
+        navigation.selectedItemId = index
+    }
+
     protected fun showError(message: String?) {
         println("Error: " + message)
         Toast.makeText(this, "Error: " + message, Toast.LENGTH_SHORT).show()
