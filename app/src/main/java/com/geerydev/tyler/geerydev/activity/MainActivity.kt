@@ -9,7 +9,7 @@ import com.geerydev.tyler.geerydev.R
 import com.geerydev.tyler.geerydev.network.GeeryDevService
 import kotlinx.android.synthetic.main.activity_main.*
 
-abstract class BaseActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     protected val GeeryDevPostServe by lazy {
         GeeryDevService.create()
@@ -44,6 +44,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        if (savedInstanceState != null) {
+            return;
+        }
+
+
     }
 
     protected fun setChecked(index: Int) {

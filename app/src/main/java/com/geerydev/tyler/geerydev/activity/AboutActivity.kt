@@ -68,9 +68,9 @@ class AboutActivity: BaseActivity() {
             try {
                 println(this.localClassName + ": Fetching Geerydev About")
                 val htmlDocument = Jsoup.connect("https://www.geerydev.com/about").get()
-                val element = htmlDocument.select("#about-content").first()
+                val element = htmlDocument.select("#about-post_content").first()
 
-                println(this.localClassName + ": Found content: " + element.toString())
+                println(this.localClassName + ": Found post_content: " + element.toString())
                 // replace body with selected element
                 htmlDocument.body().empty().append(element.toString())
 
