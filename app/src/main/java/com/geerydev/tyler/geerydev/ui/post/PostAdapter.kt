@@ -26,6 +26,7 @@ class PostAdapter(val postActivity: PostListFragment) : RecyclerView.Adapter<Rec
             println(this@PostAdapter.blogPosts[adapterPosition])
             val frag = PostReaderFragment.newInstance(this@PostAdapter.blogPosts[adapterPosition]._id)
             (postActivity.activity as MainActivity).setContent(frag, MainActivity.TAG_POST_CONTENT)
+            println("PostReaderFragment: called setContent")
         }
     }
 

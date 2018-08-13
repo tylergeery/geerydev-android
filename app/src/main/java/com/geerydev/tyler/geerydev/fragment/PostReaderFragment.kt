@@ -2,8 +2,12 @@ package com.geerydev.tyler.geerydev.fragment
 
 import android.os.Bundle
 import android.util.Base64
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebView
 import com.geerydev.tyler.geerydev.R
+import com.geerydev.tyler.geerydev.activity.MainActivity
 import com.geerydev.tyler.geerydev.model.Post
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -21,9 +25,14 @@ class PostReaderFragment(): BaseFragment() {
         val args = arguments
 
         id = if (args != null) args.getString(INTENT_POST_ID) else ""
-        println("Creating PostReaderActivity: " + id)
+        println("Creating " + this.javaClass.toString() + ": " + id)
 
         getPost()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        println(this.javaClass.toString() + ": Creating post content view")
+        return inflater.inflate(R.layout.post_content, container, false)
     }
 
     override fun onResume() {
@@ -52,14 +61,18 @@ class PostReaderFragment(): BaseFragment() {
     }
 
     fun displayPost(post: Post) {
-        println("PostReaderActivity Found post: " + post.question)
+        println(this.javaClass.toString() + " Found post: " + post.question)
         activity?.actionBar?.setTitle(post.question)
 //        activity.supportActionBar?.setTitle(post.question)
 
-        val webView = activity?.findViewById(R.id.post_reader_content) as WebView
-        val encoded = Base64.encodeToString(post.response.toByteArray(), Base64.NO_PADDING)
+        val webView = view?.findViewById(R.id.post_reader_content) as WebView?
 
-        webView.loadData(encoded,"text/html", "base64")
+        if (webView != null) {
+            val encoded = Base64.encodeToString(post.response.toByteArray(), Base64.NO_PADDING)
+
+            webView.loadData(encoded,"text/html", "base64")
+        }
+        println(this.javaClass.toString() + " webview exists: " + (webView != null).toString())
     }
 
     fun getPost() {

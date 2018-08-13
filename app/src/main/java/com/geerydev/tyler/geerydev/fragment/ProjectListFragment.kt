@@ -3,7 +3,9 @@ package com.geerydev.tyler.geerydev.fragment
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.geerydev.tyler.geerydev.R
 import com.geerydev.tyler.geerydev.model.Project
 import com.geerydev.tyler.geerydev.ui.project.ProjectAdapter
@@ -25,6 +27,21 @@ class ProjectListFragment: BaseFragment() {
         viewAdapter = ProjectAdapter()
 
         getProjects()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val root = inflater.inflate(R.layout.fragment_project_summary_list, container, false)
+        val view = root.findViewById(R.id.project_list_view) as RecyclerView
+
+        view.apply {
+            // use a linear layout manager
+            layoutManager = viewManager
+
+            // specify an viewAdapter (see also next example)
+            adapter = viewAdapter
+        }
+
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

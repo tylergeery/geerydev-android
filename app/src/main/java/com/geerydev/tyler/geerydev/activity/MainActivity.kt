@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     fun setContent(frag: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, frag, tag)
-                .addToBackStack(null)
+                .addToBackStack(tag)
                 .commit()
     }
 

@@ -39,8 +39,6 @@ class PostListFragment : BaseFragment() {
         val root = inflater.inflate(R.layout.fragment_post_summary_list, container, false)
         val view = root.findViewById(R.id.psl_recycler) as RecyclerView
 
-        container?.removeView(view)
-
         view.apply {
             // use a linear layout manager
             layoutManager = viewManager
@@ -49,7 +47,7 @@ class PostListFragment : BaseFragment() {
             adapter = viewAdapter
         }
 
-        return view
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
