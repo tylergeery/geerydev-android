@@ -32,26 +32,30 @@ class PostListFragment : BaseFragment() {
         viewManager = LinearLayoutManager(activity)
         viewAdapter = PostAdapter(this)
 
-
         getPosts()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val resp = super.onCreateView(inflater, container, savedInstanceState)
+        val root = inflater.inflate(R.layout.fragment_post_summary_list, container, false)
+        val view = root.findViewById(R.id.psl_recycler) as RecyclerView
 
-        return resp
-    }
+        container?.removeView(view)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        recyclerView = view.findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+        view.apply {
             // use a linear layout manager
             layoutManager = viewManager
 
             // specify an viewAdapter (see also next example)
             adapter = viewAdapter
         }
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // TODO: set listeners here
     }
 
     override fun onResume() {

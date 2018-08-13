@@ -11,21 +11,20 @@ import com.geerydev.tyler.geerydev.fragment.ProjectListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     protected val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_posts -> {
-                setContent(PostListFragment())
+                setContent(PostListFragment(), TAG_POST_LIST)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_projects -> {
-                setContent(ProjectListFragment())
+                setContent(ProjectListFragment(), TAG_PROJECT_LIST)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_about -> {
-                setContent(AboutFragment())
+                setContent(AboutFragment(), TAG_ABOUT)
 
                 return@OnNavigationItemSelectedListener true
             }
@@ -39,20 +38,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        if (savedInstanceState != null) {
-            return;
+        val fragment: Fragment? = supportFragmentManager.findFragmentByTag(TAG_POST_LIST)
+        if (fragment == null) {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, PostListFragment(), TAG_POST_LIST)
+                    .commit()
         }
-
-        setContent(PostListFragment())
     }
 
-    fun setContent(frag: Fragment) {
+    fun setContent(frag: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, frag)
+                .replace(R.id.fragment_container, frag, tag)
+                .addToBackStack(null)
                 .commit()
     }
 
     fun setChecked(index: Int) {
         navigation.selectedItemId = index
+    }
+
+    companion object {
+        val TAG_POST_LIST = "POST_LIST"
+        val TAG_POST_CONTENT = "POST_CONTENT"
+        val TAG_PROJECT_LIST = "PROJECT_LIST"
+        val TAG_ABOUT = "ABOUT"
     }
 }

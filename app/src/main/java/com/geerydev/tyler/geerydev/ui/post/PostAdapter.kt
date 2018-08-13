@@ -25,7 +25,7 @@ class PostAdapter(val postActivity: PostListFragment) : RecyclerView.Adapter<Rec
             println("ViewHolder Clicked: " + adapterPosition)
             println(this@PostAdapter.blogPosts[adapterPosition])
             val frag = PostReaderFragment.newInstance(this@PostAdapter.blogPosts[adapterPosition]._id)
-            (postActivity.activity as MainActivity).setContent(frag)
+            (postActivity.activity as MainActivity).setContent(frag, MainActivity.TAG_POST_CONTENT)
         }
     }
 

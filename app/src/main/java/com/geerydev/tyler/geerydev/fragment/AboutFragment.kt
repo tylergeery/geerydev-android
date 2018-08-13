@@ -46,11 +46,13 @@ class AboutFragment: BaseFragment() {
     }
 
     fun createAboutWebView() {
-        wv = WebView(this)
+        wv = WebView(activity)
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        val layout = findViewById<ConstraintLayout>(R.id.container);
+        val layout = activity?.findViewById<ConstraintLayout>(R.id.container);
 
-        layout.addView(wv, layoutParams)
+        if (layout != null) {
+            layout.addView(wv, layoutParams)
+        }
     }
 
     fun getAboutPage() {
@@ -59,7 +61,7 @@ class AboutFragment: BaseFragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { html -> wv.loadData(html, "text/html", "UTF-8") },
-                        { error -> Toast.makeText(this, "About view not loaded: " + error.message, Toast.LENGTH_LONG).show() }
+                        { error -> Toast.makeText(activity, "About view not loaded: " + error.message, Toast.LENGTH_LONG).show() }
                 )
 
     }
