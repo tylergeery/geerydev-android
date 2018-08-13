@@ -1,7 +1,5 @@
-package com.geerydev.tyler.geerydev.activity
+package com.geerydev.tyler.geerydev.fragment
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
 import android.webkit.WebView
@@ -11,18 +9,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class PostReaderActivity: BaseActivity() {
+
+
+class PostReaderFragment(): BaseFragment() {
 
     private lateinit var id: String
     private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val args = arguments
 
-        id = intent.getStringExtra(INTENT_POST_ID)
-
+        id = if (args != null) args.getString(INTENT_POST_ID) else ""
         println("Creating PostReaderActivity: " + id)
-        setContentView(R.layout.post_content)
 
         getPost()
     }
@@ -41,21 +40,23 @@ class PostReaderActivity: BaseActivity() {
 
         private val INTENT_POST_ID = "POST_ID"
 
-        fun newIntent(context: Context, postId: String): Intent {
-            val intent = Intent(context, PostReaderActivity::class.java)
-            intent.putExtra(INTENT_POST_ID, postId)
-            println("PostReaderActivity starting: " + postId)
+        fun newInstance(postId: String): PostReaderFragment {
+            val fragment = PostReaderFragment()
+            val bundle = Bundle(1)
 
-            return intent
+            bundle.putString(INTENT_POST_ID, postId)
+            fragment.setArguments(bundle)
+
+            return fragment
         }
     }
 
     fun displayPost(post: Post) {
         println("PostReaderActivity Found post: " + post.question)
-        actionBar?.setTitle(post.question)
-        supportActionBar?.setTitle(post.question)
+        activity?.actionBar?.setTitle(post.question)
+//        activity.supportActionBar?.setTitle(post.question)
 
-        val webView = findViewById(R.id.post_reader_content) as WebView
+        val webView = activity?.findViewById(R.id.post_reader_content) as WebView
         val encoded = Base64.encodeToString(post.response.toByteArray(), Base64.NO_PADDING)
 
         webView.loadData(encoded,"text/html", "base64")

@@ -1,9 +1,11 @@
 package com.geerydev.tyler.geerydev.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.geerydev.tyler.geerydev.ui.post.PostAdapter
 import com.geerydev.tyler.geerydev.model.Post
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 import com.geerydev.tyler.geerydev.R
 
 
-class PostListFragment : Fragment() {
+class PostListFragment : BaseFragment() {
 
     private var page: Int = 1
     private var per_page: Int = 10
@@ -27,19 +29,29 @@ class PostListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewManager = LinearLayoutManager(this)
+        viewManager = LinearLayoutManager(activity)
         viewAdapter = PostAdapter(this)
 
-        recyclerView = findViewById<RecyclerView>(R.id.my_recycler_view).apply {
+
+        getPosts()
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val resp = super.onCreateView(inflater, container, savedInstanceState)
+
+        return resp
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerView = view.findViewById<RecyclerView>(R.id.my_recycler_view).apply {
             // use a linear layout manager
             layoutManager = viewManager
 
             // specify an viewAdapter (see also next example)
             adapter = viewAdapter
-
         }
-
-        getPosts()
     }
 
     override fun onResume() {

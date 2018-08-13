@@ -1,38 +1,32 @@
 package com.geerydev.tyler.geerydev.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.geerydev.tyler.geerydev.R
-import com.geerydev.tyler.geerydev.network.GeeryDevService
+import com.geerydev.tyler.geerydev.fragment.AboutFragment
+import com.geerydev.tyler.geerydev.fragment.PostListFragment
+import com.geerydev.tyler.geerydev.fragment.ProjectListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    protected val GeeryDevPostServe by lazy {
-        GeeryDevService.create()
-    }
-
     protected val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_posts -> {
-                val intent = Intent(this, PostActivity::class.java)
+                setContent(PostListFragment())
 
-                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_projects -> {
-                val intent = Intent(this, ProjectActivity::class.java)
+                setContent(ProjectListFragment())
 
-                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_about -> {
-                val intent = Intent(this, AboutActivity::class.java)
+                setContent(AboutFragment())
 
-                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -49,15 +43,16 @@ class MainActivity : AppCompatActivity() {
             return;
         }
 
-
+        setContent(PostListFragment())
     }
 
-    protected fun setChecked(index: Int) {
+    fun setContent(frag: Fragment) {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, frag)
+                .commit()
+    }
+
+    fun setChecked(index: Int) {
         navigation.selectedItemId = index
-    }
-
-    protected fun showError(message: String?) {
-        println("Error: " + message)
-        Toast.makeText(this, "Error: " + message, Toast.LENGTH_SHORT).show()
     }
 }

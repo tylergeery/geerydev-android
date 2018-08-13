@@ -5,17 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.geerydev.tyler.geerydev.activity.PostActivity
 import com.geerydev.tyler.geerydev.R
-import com.geerydev.tyler.geerydev.activity.PostReaderActivity
+import com.geerydev.tyler.geerydev.activity.MainActivity
+import com.geerydev.tyler.geerydev.fragment.PostListFragment
+import com.geerydev.tyler.geerydev.fragment.PostReaderFragment
 import com.geerydev.tyler.geerydev.model.Post
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PostAdapter(val postActivity: PostActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PostAdapter(val postActivity: PostListFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected var blogPosts: List<Post> = ArrayList()
 
-    inner class PostViewHolder(itemView: View, val postActivity: PostActivity): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class PostViewHolder(itemView: View, val postActivity: PostListFragment): RecyclerView.ViewHolder(itemView), View.OnClickListener {
         fun setOnClickListener() {
             itemView.setOnClickListener(this)
         }
@@ -23,9 +24,8 @@ class PostAdapter(val postActivity: PostActivity) : RecyclerView.Adapter<Recycle
         override fun onClick(v: View?) {
             println("ViewHolder Clicked: " + adapterPosition)
             println(this@PostAdapter.blogPosts[adapterPosition])
-            println("Get blog posts")
-            val intent = PostReaderActivity.newIntent(postActivity, this@PostAdapter.blogPosts[adapterPosition]._id)
-            postActivity.startActivity(intent)
+            val frag = PostReaderFragment.newInstance(this@PostAdapter.blogPosts[adapterPosition]._id)
+            (postActivity.activity as MainActivity).setContent(frag)
         }
     }
 
@@ -47,7 +47,7 @@ class PostAdapter(val postActivity: PostActivity) : RecyclerView.Adapter<Recycle
         // create a new view
         // set the view's size, margins, paddings and layout parameters
         val cardView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.post_summary, parent, false)
+                .inflate(R.layout.post_summary_list, parent, false)
 
         return PostViewHolder(cardView, postActivity)
     }

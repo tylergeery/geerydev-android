@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.geerydev.tyler.geerydev.R
-import com.geerydev.tyler.geerydev.activity.ProjectActivity
 import com.geerydev.tyler.geerydev.model.Project
 import com.squareup.picasso.Picasso
 import java.util.*
 
-class ProjectAdapter(val projectActivity: ProjectActivity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProjectAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     protected var projects: List<Project> = ArrayList()
 
     inner class ProjectViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -45,7 +44,7 @@ class ProjectAdapter(val projectActivity: ProjectActivity) : RecyclerView.Adapte
         // create a new view
         // set the view's size, margins, paddings and layout parameters
         val cardView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.project, parent, false)
+                .inflate(R.layout.  project, parent, false)
 
         return ProjectViewHolder(cardView)
     }
