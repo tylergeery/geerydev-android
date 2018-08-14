@@ -10,7 +10,7 @@ open class BaseFragment: Fragment() {
     }
 
     protected fun showError(message: String?) {
-        println("Error: " + message)
-        Toast.makeText(context, "Error: " + message, Toast.LENGTH_SHORT).show()
+        println("Fragment Error: " + message)
+        Toast.makeText(context, "Fragment Error: " + message, Toast.LENGTH_SHORT).show()
     }
 }
