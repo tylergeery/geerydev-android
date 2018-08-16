@@ -6,12 +6,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.geerydev.tyler.geerydev.ui.post.PostAdapter
 import com.geerydev.tyler.geerydev.model.Post
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import com.geerydev.tyler.geerydev.R
+import kotlinx.android.synthetic.main.fragment_post_summary_list.*
 
 
 class PostListFragment : BaseFragment() {
@@ -22,9 +24,11 @@ class PostListFragment : BaseFragment() {
 
     private var disposable: Disposable? = null
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PostAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+
+    private lateinit var forward_button: Button
+    private lateinit var back_button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +57,25 @@ class PostListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO: set listeners here
+        forward_button = activity!!.findViewById(R.id.page_forward)
+        back_button = activity!!.findViewById(R.id.page_back)
+
+        forward_button.text = ">"
+        back_button.text = "<"
+
+        forward_button.setOnClickListener {
+            page++
+
+            getPosts()
+        }
+
+        back_button.setOnClickListener {
+            if (page > 1) {
+                page--
+
+                getPosts()
+            }
+        }
     }
 
     override fun onResume() {
@@ -81,5 +103,18 @@ class PostListFragment : BaseFragment() {
         println("Result: " + result.count())
 
         viewAdapter.setPostViews(result)
+
+        println("Per Page: " + per_page.toString() + " " + (result.count() < per_page).toString())
+//        if (result.count() < per_page) {
+//            forward_button.visibility = View.GONE
+//        } else {
+//            forward_button.visibility = View.VISIBLE
+//        }
+//
+//        if (page > 1) {
+//            back_button.visibility = View.VISIBLE
+//        } else {
+//            back_button.visibility = View.GONE
+//        }
     }
 }
