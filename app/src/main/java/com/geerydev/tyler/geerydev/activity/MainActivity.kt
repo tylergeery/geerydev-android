@@ -53,10 +53,6 @@ class MainActivity : AppCompatActivity() {
                 .commit()
     }
 
-    fun setChecked(index: Int) {
-        navigation.selectedItemId = index
-    }
-
     companion object {
         val TAG_POST_LIST = "POST_LIST"
         val TAG_POST_CONTENT = "POST_CONTENT"
