@@ -1,6 +1,7 @@
 package com.geerydev.tyler.geerydev.fragment
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -61,18 +62,20 @@ class PostReaderFragment(): BaseFragment() {
     }
 
     fun displayPost(post: Post) {
-        println(this.javaClass.toString() + " Found post: " + post.question)
-        activity?.actionBar?.setTitle(post.question)
-//        activity.supportActionBar?.setTitle(post.question)
+        println(this.javaClass.toString() + " Found post: " + post.question + " : " + post.response)
 
+        val act = activity as AppCompatActivity?
         val webView = view?.findViewById(R.id.post_reader_content) as WebView?
 
+        act?.actionBar?.setTitle(post.question)
+        act?.supportActionBar?.setTitle(post.question)
+
+        println(this.javaClass.toString() + " webview exists: " + (webView != null).toString())
         if (webView != null) {
             val encoded = Base64.encodeToString(post.response.toByteArray(), Base64.NO_PADDING)
 
             webView.loadData(encoded,"text/html", "base64")
         }
-        println(this.javaClass.toString() + " webview exists: " + (webView != null).toString())
     }
 
     fun getPost() {
