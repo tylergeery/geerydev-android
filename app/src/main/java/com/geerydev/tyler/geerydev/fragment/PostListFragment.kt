@@ -109,5 +109,9 @@ class PostListFragment : BaseFragment() {
         } else {
             back_button.visibility = View.GONE
         }
+
+        val rv = activity?.findViewById(R.id.psl_recycler) as RecyclerView
+
+        rv.scrollToPosition(0)
     }
 }

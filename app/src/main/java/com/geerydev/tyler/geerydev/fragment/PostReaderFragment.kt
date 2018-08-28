@@ -26,7 +26,6 @@ class PostReaderFragment(): BaseFragment() {
         val args = arguments
 
         id = if (args != null) args.getString(INTENT_POST_ID) else ""
-        println("Creating " + this.javaClass.toString() + ": " + id)
 
         getPost()
     }
@@ -62,18 +61,17 @@ class PostReaderFragment(): BaseFragment() {
     }
 
     fun displayPost(post: Post) {
-        println(this.javaClass.toString() + " Found post: " + post.question + " : " + post.response)
-
         val act = activity as AppCompatActivity?
         val webView = view?.findViewById(R.id.post_reader_content) as WebView?
 
         act?.actionBar?.setTitle(post.question)
         act?.supportActionBar?.setTitle(post.question)
 
-        println(this.javaClass.toString() + " webview exists: " + (webView != null).toString())
         if (webView != null) {
             val encoded = Base64.encodeToString(post.response.toByteArray(), Base64.NO_PADDING)
 
+            webView.settings.javaScriptEnabled = true
+            webView.settings.domStorageEnabled = true
             webView.loadData(encoded,"text/html", "base64")
         }
     }
