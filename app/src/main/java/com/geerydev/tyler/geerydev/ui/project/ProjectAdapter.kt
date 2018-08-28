@@ -58,11 +58,13 @@ class ProjectAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val titleView = holder.itemView.findViewById(R.id.project_title) as TextView
         val detailsView = holder.itemView.findViewById(R.id.project_details) as TextView
         val imageView = holder.itemView.findViewById(R.id.project_image) as ImageView
+        val linkView = holder.itemView.findViewById(R.id.project_link) as TextView
 
         Picasso.get().load("https://geerydev.com" + project.image).into(imageView);
 
         titleView.text = project.title
         detailsView.text = project.detail
+        linkView.text = project.link
 
         (holder as ProjectViewHolder).setOnClickListener()
     }

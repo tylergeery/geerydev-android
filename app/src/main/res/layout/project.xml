@@ -15,6 +15,7 @@
             android:id="@+id/project_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
             android:layout_marginStart="100dp"
             android:textSize="20dp"
             android:gravity="center_vertical|center_horizontal"
@@ -33,8 +34,18 @@
         android:id="@+id/project_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/post_headbar"
         android:layout_marginTop="100dp"
         android:padding="20dp"
         android:text="Project details and other information" />
+
+    <TextView
+        android:id="@+id/project_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/project_details"
+        android:layout_marginTop="170dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:autoLink="web"
+        android:text="github.com" />
 </android.support.v7.widget.CardView>
